@@ -56,6 +56,8 @@
 	position: absolute;
 	width: 4vw;
 	height: 5vw;
+	transform: rotateY(0deg);
+	transition: transform 0.5s linear, margin-left 1s;
 }
 
 .facedown {
@@ -176,7 +178,7 @@
 
 .current.stack {
 	position: absolute;
-	width: 4vw !important;
+	width: 10vw !important;
 	height: 6vw !important;
 	overflow: visible;
 	transition: top 0.5s, left 0.5s, transform 0.5s;
