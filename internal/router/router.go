@@ -1,22 +1,57 @@
 package router
 
 import (
+	"context"
+	"fmt"
 	"net/http"
+	"time"
 
+	"github.com/cyber-missile/good-face-bad-face/internal/application"
+	"github.com/cyber-missile/good-face-bad-face/internal/handler"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )
 
-func GetRoutes() *chi.Mux {
+func getRoutes(app *application.App) *chi.Mux {
+	handlers := handler.New(app)
 	router := chi.NewRouter()
 
+	router.Use(middleware.RequestID)
+	router.Use(middleware.RealIP)
 	router.Use(middleware.Logger)
+	router.Use(middleware.Recoverer)
 
-	router.Get("/test", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-
-		w.Write([]byte("Test"))
-	})
+	router.Get("/", handlers.Main)
 
 	return router
+}
+
+func Start(app *application.App, ctx context.Context) error {
+	server := &http.Server{
+		Addr:    fmt.Sprintf(":%d", app.Config.Port),
+		Handler: getRoutes(app),
+	}
+
+	fmt.Println("Starting server")
+
+	ch := make(chan error, 1)
+	go func() {
+		err := server.ListenAndServe()
+		if err != nil {
+			ch <- fmt.Errorf("failed to start server: %w", err)
+		}
+
+		close(ch)
+	}()
+
+	var err error
+
+	select {
+	case err = <-ch:
+		return err
+	case <-ctx.Done():
+		timeout, cancel := context.WithTimeout(context.Background(), time.Second*10)
+		defer cancel()
+		return server.Shutdown(timeout)
+	}
 }
