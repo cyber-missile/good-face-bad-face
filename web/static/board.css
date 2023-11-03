@@ -61,7 +61,7 @@
 }
 
 .facedown {
-	background-image: url("./facedown.png");
+	background-image: url("cards/facedown.png");
 	background-size: cover;
 }
 

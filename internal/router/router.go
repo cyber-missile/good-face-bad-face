@@ -22,6 +22,7 @@ func getRoutes(app *application.App) *chi.Mux {
 	router.Use(middleware.Recoverer)
 
 	router.Get("/", handlers.Main)
+	router.Get("/game/", handlers.Board)
 
 	return router
 }
