@@ -37,7 +37,7 @@ type Templates struct {
 func New() (Templates, error) {
 	pagesDir, err := web.GetAllTemplateFiles()
 	if err != nil {
-		return Templates{}, nil
+		return Templates{}, err
 	}
 
 	cache, err := buildCache(pagesDir)
