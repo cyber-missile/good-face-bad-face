@@ -15,10 +15,3 @@ func New(app *application.App) *Handler {
 		app: app,
 	}
 }
-
-func (h Handler) Main(w http.ResponseWriter, r *http.Request) {
-	err := h.app.Templates.RenderTemplate(w, "main.tmpl", nil)
-	if err != nil {
-		h.app.Logger.Error(err.Error())
-	}
-}

@@ -24,7 +24,10 @@ func getRoutes(app *application.App) *chi.Mux {
 	}))
 	router.Use(middleware.Recoverer)
 
+	router.Handle("/static/*", http.StripPrefix("/static/", http.FileServer(http.Dir("./web/static/"))))
+
 	router.Get("/", handlers.Main)
+	router.Get("/game/", handlers.Board)
 
 	return router
 }

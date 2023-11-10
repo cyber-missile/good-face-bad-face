@@ -1,0 +1,80 @@
+{{template "base.tmpl"}}
+{{define "head"}}
+    <link rel="stylesheet" href="/static/board.css">
+    <script src="/static/board.js"></script>
+{{end}}
+{{define "content"}}
+<div id="board">
+    <div class="player p1">
+        <div class="stack">
+            <div class="card good"></div>
+            <div class="card good"></div>
+            <div class="card good"></div>
+            <div class="card bad"></div>
+        </div>
+        <div class="collected">
+            <div class="card good"></div>"
+        </div>
+    </div>
+    <div class="player p2">
+        <div class="stack">
+            <div class="card facedown"></div>
+            <div class="card facedown"></div>
+            <div class="card facedown"></div>
+            <div class="card facedown"></div>
+            <div class="card facedown"></div>
+            <div class="card facedown"></div>
+            <div class="card facedown"></div>
+            <div class="card facedown"></div>
+            <div class="card facedown"></div>
+        </div>
+        <div class="collected">
+            <div class="card good"></div>"
+        </div>
+    </div>
+    <div class="player p3">
+        <div class="stack">
+            <div class="card facedown"></div>
+            <div class="card facedown"></div>
+            <div class="card facedown"></div>
+        </div>
+        <div class="collected">
+            <div class="card good"></div>"
+            <div class="card good"></div>"
+        </div>
+    </div>
+    <div class="player p4">
+        <div class="stack">
+            <div class="card facedown"></div>
+            <div class="card facedown"></div>
+            <div class="card facedown"></div>
+        </div>
+        <div class="collected">
+            <div class="card good"></div>"
+            <div class="card good"></div>"
+            <div class="card good"></div>"
+        </div>
+    </div>
+    <div class="current stack p1">
+        <div class="card facedown"></div>
+        <div class="card facedown"></div>
+        <div class="card facedown"></div>
+    </div>
+</div>
+<div id="stackSelector"></div>
+
+<div id="debug" style="background-color: grey; position: absolute;">
+    <button onclick="next()">Next Player</button>
+    <button onclick="revealTop('good')">Reveal Good</button>
+    <button onclick="revealTop('bad')">Reveal Bad</button>
+
+    <script>
+function next() {
+let elm = document.getElementsByClassName("current")[0];
+let current = parseInt(elm.className.split(" ")[2][1]);
+current = current % 4 + 1;
+elm.className = "current stack p" + current;
+}
+    </script>
+</div>
+{{end}}
