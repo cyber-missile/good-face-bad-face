@@ -13,9 +13,10 @@
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+temp/
 
 # Dependency directories (remove the comment below to include it)
-# vendor/
+# vendoxr/
 
 # Go workspace file
 go.work

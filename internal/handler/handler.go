@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/cyber-missile/good-face-bad-face/internal/application"
@@ -20,6 +19,6 @@ func New(app *application.App) *Handler {
 func (h Handler) Main(w http.ResponseWriter, r *http.Request) {
 	err := h.app.Templates.RenderTemplate(w, "main.tmpl", nil)
 	if err != nil {
-		fmt.Println(err)
+		h.app.Logger.Error(err.Error())
 	}
 }

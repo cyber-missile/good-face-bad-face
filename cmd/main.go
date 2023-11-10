@@ -8,6 +8,7 @@ import (
 	"github.com/cyber-missile/good-face-bad-face/internal/config"
 	"github.com/cyber-missile/good-face-bad-face/internal/router"
 	"github.com/cyber-missile/good-face-bad-face/internal/templates"
+	"go.uber.org/zap"
 )
 
 func main() {
@@ -25,9 +26,17 @@ func start() error {
 		return err
 	}
 
+	logger, err := zap.NewDevelopment()
+	if err != nil {
+		return err
+	}
+
+	defer logger.Sync()
+
 	app := application.App{
 		Config:    config,
 		Templates: templateCache,
+		Logger:    *logger,
 	}
 
 	ctx := context.Background()
