@@ -22,7 +22,7 @@ func (h *Handler) Websocket(w http.ResponseWriter, r *http.Request) {
 	defer func() {
 		err = connection.Close()
 		if err != nil {
-			h.app.Logger.Info("error closing websocket connection", zap.Error(err))
+			h.app.Logger.Error("error closing websocket connection", zap.Error(err))
 		}
 
 		h.app.Logger.Info("websocket connection closed")
