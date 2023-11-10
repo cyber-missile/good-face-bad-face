@@ -18,7 +18,10 @@ func getRoutes(app *application.App) *chi.Mux {
 
 	router.Use(middleware.RequestID)
 	router.Use(middleware.RealIP)
-	router.Use(middleware.Logger)
+	router.Use(logger(app.Logger.Sugar(), &Options{
+		WithUserAgent: true,
+		WithReferer:   true,
+	}))
 	router.Use(middleware.Recoverer)
 
 	router.Handle("/static/*", http.StripPrefix("/static/", http.FileServer(http.Dir("./web/static/"))))
@@ -35,7 +38,7 @@ func Start(app *application.App, ctx context.Context) error {
 		Handler: getRoutes(app),
 	}
 
-	fmt.Println("Starting server")
+	app.Logger.Info("Starting http server")
 
 	ch := make(chan error, 1)
 	go func() {
