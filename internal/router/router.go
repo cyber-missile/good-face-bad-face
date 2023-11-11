@@ -28,6 +28,7 @@ func getRoutes(app *application.App) *chi.Mux {
 
 	router.Get("/", handlers.Main)
 	router.Get("/game/", handlers.Board)
+	router.Get("/ws", handlers.Websocket)
 
 	return router
 }

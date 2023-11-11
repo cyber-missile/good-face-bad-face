@@ -1,8 +1,6 @@
 package handler
 
 import (
-	"net/http"
-
 	"github.com/cyber-missile/good-face-bad-face/internal/application"
 )
 
