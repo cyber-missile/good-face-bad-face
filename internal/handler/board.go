@@ -1,13 +1,16 @@
 package handler
 
 import (
-	"fmt"
+	"context"
 	"net/http"
+
+	page "github.com/cyber-missile/good-face-bad-face/web/template/pages"
 )
 
 func (h Handler) Board(w http.ResponseWriter, r *http.Request) {
-	err := h.app.Templates.RenderTemplate(w, "board.tmpl", nil)
-	if err != nil {
-		fmt.Println(err)
+	component := page.Board()
+
+	if err := component.Render(context.Background(), w); err != nil {
+		h.app.Logger.Error(err.Error())
 	}
 }
