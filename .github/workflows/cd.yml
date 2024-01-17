@@ -14,9 +14,9 @@ jobs:
             go-version: 1.21
         - name: Install templ
           run: go install github.com/a-h/templ/cmd/templ@latest
+        - uses: actions/checkout@v3
         - name: Generate templ files
           run: templ generate
-        - uses: actions/checkout@v3
         - uses: superfly/flyctl-actions/setup-flyctl@master
         - run: flyctl deploy --remote-only
           env:
