@@ -1,0 +1,26 @@
+package template
+
+
+templ DefaultBase() {
+	<!DOCTYPE html />
+	<html>
+		<head>
+		</head>
+		<body>
+			{ children... }
+		</body>
+	</html>
+}
+
+templ GameBase() {
+	<!DOCTYPE html />
+	<html>
+		<head>
+    <link rel="stylesheet" href="/static/board.css" />
+    <script src="/static/board.js"></script>
+		</head>
+		<body>
+			{ children... }
+		</body>
+	</html>
+}

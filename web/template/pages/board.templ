@@ -1,9 +1,10 @@
-{{template "base.tmpl"}}
-{{define "head"}}
-    <link rel="stylesheet" href="/static/board.css">
-    <script src="/static/board.js"></script>
-{{end}}
-{{define "content"}}
+package page
+
+import "github.com/cyber-missile/good-face-bad-face/web/template"
+
+templ Board() {
+	@template.GameBase() {
+		
 <div id="board">
     <div class="player p1">
         <div class="stack">
@@ -77,4 +78,5 @@ elm.className = "current stack p" + current;
 }
     </script>
 </div>
-{{end}}
+	}
+}
