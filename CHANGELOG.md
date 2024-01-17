@@ -1,3 +1,9 @@
+## v1.0.0 (2024-01-17)
+
+### Feat
+
+- added the templ templating system to render the HTML (#17)
+
 ## v0.3.0 (2024-01-17)
 
 ### Feat
