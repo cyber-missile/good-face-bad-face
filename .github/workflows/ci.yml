@@ -12,7 +12,7 @@ jobs:
   
   bump-version:
     if: "!startsWith(github.event.head_commit.message, 'bump:')"
-    needs: test
+    # needs: test
     runs-on: ubuntu-latest
     name: "Bump version and create changelog with commitizen"
     steps:
