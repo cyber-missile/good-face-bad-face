@@ -1,3 +1,9 @@
+## v0.5.1 (2024-01-17)
+
+### Fix
+
+- go templ installation
+
 # v0.5.0 (2024-01-17)
 
 ### Feat
