@@ -1,3 +1,9 @@
+## v0.3.0 (2024-01-17)
+
+### Feat
+
+- added a deployment with fly.io (#16)
+
 ## v0.2.1 (2024-01-17)
 
 ### Fix
