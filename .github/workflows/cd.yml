@@ -13,7 +13,7 @@ jobs:
           with:
             go-version: 1.21
         - name: Install templ
-          run: go install github.com/a-h/templ
+          run: go install github.com/a-h/templ/cmd/templ@latest
         - name: Generate templ files
           run: templ generate
         - uses: actions/checkout@v3
