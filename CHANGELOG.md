@@ -1,3 +1,9 @@
+## v0.5.2 (2024-01-17)
+
+### Fix
+
+- added templ to dependencies
+
 ## v0.5.1 (2024-01-17)
 
 ### Fix
