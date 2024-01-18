@@ -17,6 +17,7 @@ func main() {
 	}
 }
 
+// Start dose start start
 func start() error {
 	config := config.Config{Port: 9001}
 
