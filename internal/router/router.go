@@ -8,6 +8,7 @@ import (
 
 	"github.com/cyber-missile/good-face-bad-face/internal/application"
 	"github.com/cyber-missile/good-face-bad-face/internal/handler"
+	"github.com/cyber-missile/good-face-bad-face/web"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )
@@ -24,7 +25,8 @@ func getRoutes(app *application.App) *chi.Mux {
 	}))
 	router.Use(middleware.Recoverer)
 
-	router.Handle("/static/*", http.StripPrefix("/static/", http.FileServer(http.Dir("./web/static/"))))
+	fileServer := http.FileServer(http.FS(web.StaticFilesDir))
+	router.Handle("/static/*", http.StripPrefix("/static/", fileServer))
 
 	router.Get("/", handlers.Main)
 	router.Get("/game/", handlers.Board)
