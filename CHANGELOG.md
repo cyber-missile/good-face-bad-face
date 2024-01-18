@@ -1,3 +1,10 @@
+## v0.5.4 (2024-01-18)
+
+### Fix
+
+- static files
+- include static files in binary
+
 ## v0.5.3 (2024-01-17)
 
 ### Fix
