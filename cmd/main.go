@@ -18,6 +18,7 @@ func main() {
 }
 
 // Start dose start start
+// and the start start tge start which start the start on start
 func start() error {
 	config := config.Config{Port: 9001}
 
