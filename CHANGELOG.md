@@ -1,3 +1,9 @@
+## v0.5.5 (2024-01-18)
+
+### Fix
+
+- handling asstes in a better way, so it can actualy serviced by t… (#19)
+
 ## v0.5.4 (2024-01-18)
 
 ### Fix
