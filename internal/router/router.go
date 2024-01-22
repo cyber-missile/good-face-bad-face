@@ -7,14 +7,15 @@ import (
 	"time"
 
 	"github.com/cyber-missile/good-face-bad-face/internal/application"
+	"github.com/cyber-missile/good-face-bad-face/internal/game"
 	"github.com/cyber-missile/good-face-bad-face/internal/handler"
 	"github.com/cyber-missile/good-face-bad-face/web"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )
 
-func getRoutes(app *application.App) *chi.Mux {
-	handlers := handler.New(app)
+func getRoutes(app *application.App, game *game.Game) *chi.Mux {
+	handlers := handler.New(app, game)
 	router := chi.NewRouter()
 
 	router.Use(middleware.RequestID)
@@ -30,15 +31,16 @@ func getRoutes(app *application.App) *chi.Mux {
 
 	router.Get("/", handlers.Main)
 	router.Get("/game/", handlers.Board)
-	router.Get("/ws", handlers.Websocket)
+	router.Get("/ws", handlers.NewRoom)
+	router.Get("/ws/{roomUid}", handlers.EnterRoom)
 
 	return router
 }
 
-func Start(app *application.App, ctx context.Context) error {
+func Start(app *application.App, game *game.Game, ctx context.Context) error {
 	server := &http.Server{
 		Addr:    fmt.Sprintf(":%d", app.Config.Port),
-		Handler: getRoutes(app),
+		Handler: getRoutes(app, game),
 	}
 
 	app.Logger.Info("Starting http server")

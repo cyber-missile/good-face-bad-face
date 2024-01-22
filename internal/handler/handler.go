@@ -2,14 +2,17 @@ package handler
 
 import (
 	"github.com/cyber-missile/good-face-bad-face/internal/application"
+	"github.com/cyber-missile/good-face-bad-face/internal/game"
 )
 
 type Handler struct {
-	app *application.App
+	app  *application.App
+	game *game.Game
 }
 
-func New(app *application.App) *Handler {
+func New(app *application.App, game *game.Game) *Handler {
 	return &Handler{
-		app: app,
+		app:  app,
+		game: game,
 	}
 }
