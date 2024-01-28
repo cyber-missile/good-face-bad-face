@@ -14,9 +14,25 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 )
 
-func getRoutes(app *application.App, game *game.Game) *chi.Mux {
+func fileServer() (*http.Handler, error) {
+	assets, err := web.Assets()
+	if err != nil {
+		return nil, err
+	}
+
+	fileServer := http.FileServer(http.FS(assets))
+
+	return &fileServer, nil
+}
+
+func getRoutes(app *application.App, game *game.Game) (*chi.Mux, error) {
 	handlers := handler.New(app, game)
 	router := chi.NewRouter()
+
+	fileServer, err := fileServer()
+	if err != nil {
+		return nil, err
+	}
 
 	router.Use(middleware.RequestID)
 	router.Use(middleware.RealIP)
@@ -26,21 +42,25 @@ func getRoutes(app *application.App, game *game.Game) *chi.Mux {
 	}))
 	router.Use(middleware.Recoverer)
 
-	fileServer := http.FileServer(http.FS(web.StaticFilesDir))
-	router.Handle("/static/*", http.StripPrefix("/static/", fileServer))
+	router.Handle("/static/*", http.StripPrefix("/static/", *fileServer))
 
 	router.Get("/", handlers.Main)
 	router.Get("/game/", handlers.Board)
 	router.Get("/ws", handlers.NewRoom)
 	router.Get("/ws/{roomUid}", handlers.EnterRoom)
 
-	return router
+	return router, nil
 }
 
 func Start(app *application.App, game *game.Game, ctx context.Context) error {
+	handler, err := getRoutes(app, game)
+	if err != nil {
+		return err
+	}
+
 	server := &http.Server{
 		Addr:    fmt.Sprintf(":%d", app.Config.Port),
-		Handler: getRoutes(app, game),
+		Handler: handler,
 	}
 
 	app.Logger.Info("Starting http server")
@@ -54,8 +74,6 @@ func Start(app *application.App, game *game.Game, ctx context.Context) error {
 
 		close(ch)
 	}()
-
-	var err error
 
 	select {
 	case err = <-ch:
