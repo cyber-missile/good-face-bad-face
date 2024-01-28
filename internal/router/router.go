@@ -25,8 +25,8 @@ func fileServer() (*http.Handler, error) {
 	return &fileServer, nil
 }
 
-func getRoutes(app *application.App, game *game.Game) (*chi.Mux, error) {
-	handlers := handler.New(app, game)
+func getRoutes(app *application.App, roomManger *game.RoomManager) (*chi.Mux, error) {
+	handlers := handler.New(app, roomManger)
 	router := chi.NewRouter()
 
 	fileServer, err := fileServer()
@@ -52,8 +52,8 @@ func getRoutes(app *application.App, game *game.Game) (*chi.Mux, error) {
 	return router, nil
 }
 
-func Start(app *application.App, game *game.Game, ctx context.Context) error {
-	handler, err := getRoutes(app, game)
+func Start(app *application.App, roomManager *game.RoomManager, ctx context.Context) error {
+	handler, err := getRoutes(app, roomManager)
 	if err != nil {
 		return err
 	}

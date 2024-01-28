@@ -6,13 +6,13 @@ import (
 )
 
 type Handler struct {
-	app  *application.App
-	game *game.Game
+	app         *application.App
+	roomManager game.RoomManager
 }
 
-func New(app *application.App, game *game.Game) *Handler {
+func New(app *application.App, roomManager *game.RoomManager) *Handler {
 	return &Handler{
-		app:  app,
-		game: game,
+		app:         app,
+		roomManager: *roomManager,
 	}
 }

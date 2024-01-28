@@ -30,7 +30,7 @@ func (h *Handler) NewRoom(w http.ResponseWriter, r *http.Request) {
 		h.app.Logger.Info("websocket connection closed")
 	}()
 
-	room := h.game.CreateRoom()
+	room := h.roomManager.CreateRoom()
 	if err = room.StartConnection(connection); err != nil {
 		// TODO: make this better ... some day ..
 		switch err.(type) {
@@ -68,7 +68,7 @@ func (h *Handler) EnterRoom(w http.ResponseWriter, r *http.Request) {
 		h.app.Logger.Info("websocket connection closed")
 	}()
 
-	ok, room := h.game.GetRoom(roomUlid)
+	ok, room := h.roomManager.GetRoom(roomUlid)
 	if !ok {
 		h.app.Logger.Warn("room dose not exists", zap.String("room_uid", roomUid))
 		w.WriteHeader(http.StatusBadRequest)

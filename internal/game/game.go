@@ -6,22 +6,22 @@ import (
 	"go.uber.org/zap"
 )
 
-type Game struct {
+type RoomManager struct {
 	rooms []*room
 
 	// utilities
 	logger zap.Logger
 }
 
-func New(logger zap.Logger) Game {
-	return Game{
+func NewRoomManager(logger zap.Logger) RoomManager {
+	return RoomManager{
 		rooms:  []*room{},
 		logger: logger,
 	}
 }
 
 // If a room exists, GetRoom returns a room object.
-func (g *Game) GetRoom(uid ulid.ULID) (bool, *room) {
+func (g *RoomManager) GetRoom(uid ulid.ULID) (bool, *room) {
 	for _, room := range g.rooms {
 		if room.Uid == uid {
 			return true, room
@@ -31,7 +31,7 @@ func (g *Game) GetRoom(uid ulid.ULID) (bool, *room) {
 	return false, nil
 }
 
-func (g *Game) CreateRoom() *room {
+func (g *RoomManager) CreateRoom() *room {
 	roomUid := ulid.Make()
 	newRoom := &room{
 		Uid:         roomUid,

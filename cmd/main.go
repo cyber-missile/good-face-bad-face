@@ -33,8 +33,8 @@ func start() error {
 		Logger: *logger,
 	}
 
-	g := game.New(*app.Logger.Named("game"))
+	roomManager := game.NewRoomManager(*app.Logger.Named("game"))
 
 	ctx := context.Background()
-	return router.Start(&app, &g, ctx)
+	return router.Start(&app, &roomManager, ctx)
 }
