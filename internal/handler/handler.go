@@ -9,7 +9,5 @@ type Handler struct {
 }
 
 func New(app *application.App) *Handler {
-	return &Handler{
-		app: app,
-	}
+	return &Handler{app: app}
 }

@@ -45,7 +45,8 @@ func getRoutes(app *application.App) (*chi.Mux, error) {
 
 	router.Get("/", handlers.Main)
 	router.Get("/game/", handlers.Board)
-	router.Get("/ws", handlers.Websocket)
+	router.Get("/ws", handlers.NewRoom)
+	router.Get("/ws/{roomUid}", handlers.EnterRoom)
 
 	return router, nil
 }
