@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/cyber-missile/good-face-bad-face/internal/application"
-	"github.com/cyber-missile/good-face-bad-face/internal/game"
 	"github.com/cyber-missile/good-face-bad-face/internal/handler"
 	"github.com/cyber-missile/good-face-bad-face/web"
 	"github.com/go-chi/chi/v5"
@@ -25,8 +24,8 @@ func fileServer() (*http.Handler, error) {
 	return &fileServer, nil
 }
 
-func getRoutes(app *application.App, roomManger *game.RoomManager) (*chi.Mux, error) {
-	handlers := handler.New(app, roomManger)
+func getRoutes(app *application.App) (*chi.Mux, error) {
+	handlers := handler.New(app)
 	router := chi.NewRouter()
 
 	fileServer, err := fileServer()
@@ -52,8 +51,8 @@ func getRoutes(app *application.App, roomManger *game.RoomManager) (*chi.Mux, er
 	return router, nil
 }
 
-func Start(app *application.App, roomManager *game.RoomManager, ctx context.Context) error {
-	handler, err := getRoutes(app, roomManager)
+func Start(app *application.App, ctx context.Context) error {
+	handler, err := getRoutes(app)
 	if err != nil {
 		return err
 	}

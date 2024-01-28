@@ -28,13 +28,14 @@ func start() error {
 
 	defer logger.Sync()
 
+	roomManager := game.NewRoomManager(*logger.Named("game"))
+
 	app := application.App{
-		Config: config,
-		Logger: *logger,
+		Config:      config,
+		Logger:      *logger,
+		RoomManager: roomManager,
 	}
 
-	roomManager := game.NewRoomManager(*app.Logger.Named("game"))
-
 	ctx := context.Background()
-	return router.Start(&app, &roomManager, ctx)
+	return router.Start(&app, ctx)
 }
